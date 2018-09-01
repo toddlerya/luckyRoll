@@ -55,7 +55,7 @@ func InitSqlite() {
 		xlsx_size VARCHAR(64)
 	)`
 	createUniqIndexXlsxInfoSql := `
-	CREATE UNIQUE INDEX IF NOT EXISTS  xlsx_idx ON xlsx_info (xlsx_name, xlsx_md5)`
+	CREATE UNIQUE INDEX IF NOT EXISTS  xlsx_idx ON xlsx_info (xlsx_md5)`
 
 	_, err = db.Exec(createXlsxInfoSql)
 	checkErr(err)
