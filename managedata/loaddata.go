@@ -48,12 +48,13 @@ func readXlsx(xlsxPath string) ([][]string, error) {
 }
 
 // 解析所有数据，进行预处理, 应该是根据每个文件的md5判断, 若文件发生变更则根据此文件更新数据库
-func parseData(dataPath string) {
+func parseData(dataPath string) ([]map[string]string, error) {
+	var datas []map[string]string
 	// 获取所有的文件
 	allFiles, err := getAllXlsx(dataPath)
 	if err != nil {
-		log.Fatalf("从%s目录下获取所有xlsx文件失败: %s", dataPath, err)
-		return
+		errMsg := fmt.Sprintf("从%s目录下获取所有xlsx文件失败: %s", dataPath, err)
+		return datas, errors.New(errMsg)
 	}
 
 	// 依次读取所有文件
@@ -76,16 +77,23 @@ func parseData(dataPath string) {
 		}
 		//		fmt.Printf("文件: %s, 年级: %s, 班级: %s, 内容: %s \n", xlsxName, grade, class, xlsxArray)
 		for _, item := range xlsxArray {
-			stu_code := item[0]
-			stu_name := item[1]
-			stu_sex := item[2]
-			stu_grade := grade
-			stu_class := class
-			fmt.Printf("%s %s %s %s %s\n", stu_code, stu_name, stu_sex, stu_grade, stu_class)
+			m := make(map[string]string)
+			m["stu_code"] = item[0]
+			m["stu_name"] = item[1]
+			m["stu_sex"] = item[2]
+			m["stu_grade"] = grade
+			m["stu_class"] = class
+			datas = append(datas, m)
 		}
 	}
+	return datas, nil
 }
 
-func Load2Db() {
-	parseData("data")
+func LoadData() {
+	datas, err := parseData("data")
+	if err != nil {
+		log.Fatal(err)
+	}
+	InitSqlite()
+	InsertData2db(datas)
 }

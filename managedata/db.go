@@ -9,7 +9,7 @@ import (
 
 var dbPath string = "data/data.db"
 
-func initSqlite() {
+func InitSqlite() {
 	// 连接数据库
 	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
@@ -18,42 +18,56 @@ func initSqlite() {
 	defer db.Close()
 
 	// 建表
-	createSql := `CREATE TABLE IF NOT EXISTS students_base_info (
-		uid INTEGER PRIMARY KEY AUTOINCREMENT,
+	createStudentsBaseInfoSql := `CREATE TABLE IF NOT EXISTS students_base_info (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		stu_code VARCHAR(64),
 		stu_name VARCHAR(64),
 		stu_sex VARCHAR(10),
 		stu_grade VARCHAR(64),
-		stu_class VARCHAR(64),
+		stu_class VARCHAR(64)
 	)`
 
-	_, err = db.Exec(createSql)
+	_, err = db.Exec(createStudentsBaseInfoSql)
 	if err != nil {
-		log.Panicf("%q: %s\n", err, createSql)
+		log.Panicf("%q: %s\n", err, createStudentsBaseInfoSql)
+		return
+	}
+
+	createXlsxInfoSql := `CREATE TABLE IF NOT EXISTS xlsx_info (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		xlsx_name VARCHAR(64),
+		xlsx_md5 VARCHAR(10),
+		xlsx_date VARCHAR(64),
+		xlsx_size VARCHAR(64)
+	)`
+
+	_, err = db.Exec(createXlsxInfoSql)
+	if err != nil {
+		log.Panicf("%q: %s\n", err, createXlsxInfoSql)
 		return
 	}
 }
 
-//func loadSqlite(data []map[string]string) {
-//	db, err := sql.Open("sqlite3", dbPath)
+func InsertData2db(data []map[string]string) {
+	db, err := sql.Open("sqlite3", dbPath)
 
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	defer db.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
 
-//	tx, err := db.Begin()
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//	stmt, err := tx.Prepare("insert into students_base_info(stu_code, stu_name, stu_sex, stu_class, stu_grade) values(?, ?, ?, ?, ?)")
-//	defer stmt.Close()
+	tx, err := db.Begin()
+	if err != nil {
+		log.Fatal(err)
+	}
+	stmt, err := tx.Prepare("insert into students_base_info(stu_code, stu_name, stu_sex, stu_class, stu_grade) values(?, ?, ?, ?, ?)")
+	defer stmt.Close()
 
-//	for _, row := range data {
-//		_, err = stmt.Exec(row[row["stu_code"], "stu_name"], row["stu_sex"], row["stu_class"], row["stu_grade"])
-//		if err != nil {
-//			log.Fatal(err)
-//		}
-//	}
-//	tx.Commit()
-//}
+	for _, row := range data {
+		_, err = stmt.Exec(row["stu_code"], row["stu_name"], row["stu_sex"], row["stu_class"], row["stu_grade"])
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	tx.Commit()
+}

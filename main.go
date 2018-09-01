@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	managedata.Load2Db()
+	managedata.LoadData()
 }
