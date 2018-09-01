@@ -36,10 +36,8 @@ func updateXlsxInfo(fileName string) {
 	}
 	xlsxName := filepath.Base(fileName)
 	xlsxName = strings.TrimSpace(xlsxName)
-	xlsxDate := xlsxBaseInfo.ModTime()
+	xlsxDate := xlsxBaseInfo.ModTime() // TODO 时间要换算成绝对秒, 还不知道怎么搞
 	xlsxSize := xlsxBaseInfo.Size()
-	fmt.Println(xlsxDate)
-	fmt.Println(xlsxSize)
 	m["xlsx_name"] = xlsxName
 	m["xlsx_md5"] = xlsxMd5
 	m["xlsx_date"] = fmt.Sprintf("%s", xlsxDate)
@@ -102,9 +100,6 @@ func parseXlsxData(dataPath string) ([]map[string]string, []string, error) {
 		if num == 1 {
 			oldFileMd5 := fileInfoMap["xlsx_md5"]
 			newFileMd5 := calcMd5(filePathName)
-			fmt.Println("filePathName===>", filePathName)
-			fmt.Println("newFileMd5  ", newFileMd5)
-			fmt.Println("oldFileMd5  ", oldFileMd5)
 			if newFileMd5 == oldFileMd5 {
 				continue
 			}
@@ -143,7 +138,7 @@ func LoadData() {
 		log.Fatal(err)
 	}
 	// TODO 如果xlsx删除了一个学生的信息, 数据库不会删除, 无法感知
-	InsertXlsxData2db(xlsxDatas)
+	InsertStudentsData2db(xlsxDatas)
 	// 确保文件解析更新入口后更新xlsx文件基本信息
 	for _, item := range allFiles {
 		updateXlsxInfo(item)

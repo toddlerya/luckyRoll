@@ -67,7 +67,7 @@ func InitSqlite() {
 	//	}
 }
 
-func InsertXlsxData2db(data []map[string]string) {
+func InsertStudentsData2db(data []map[string]string) {
 	db, err := sql.Open("sqlite3", dbPath)
 
 	checkErr(err)
@@ -75,14 +75,39 @@ func InsertXlsxData2db(data []map[string]string) {
 
 	tx, err := db.Begin()
 	checkErr(err)
-	stmt, err := tx.Prepare("insert or replace into students_base_info(stu_code, stu_name, stu_sex, stu_class, stu_grade) values (?, ?, ?, ?, ?)")
+	stmt, err := tx.Prepare("insert or replace into students_base_info(stu_code, stu_name, stu_sex, stu_grade, stu_class) values (?, ?, ?, ?, ?)")
 	defer stmt.Close()
 
 	for _, row := range data {
-		_, err = stmt.Exec(row["stu_code"], row["stu_name"], row["stu_sex"], row["stu_class"], row["stu_grade"])
+		_, err = stmt.Exec(row["stu_code"], row["stu_name"], row["stu_sex"], row["stu_grade"], row["stu_class"])
 		checkErr(err)
 	}
 	tx.Commit()
+}
+
+func QueryStudentsInfo(grade, class string) ([]map[string]string, int) {
+	db, err := sql.Open("sqlite3", dbPath)
+	checkErr(err)
+	defer db.Close()
+
+	rows, err := db.Query("select stu_code, stu_name, stu_sex from students_base_info where stu_grade=? and stu_class=?", grade, class)
+	checkErr(err)
+	defer rows.Close()
+
+	var studentMapArray []map[string]string
+	for rows.Next() {
+		var stuCode string
+		var stuName string
+		var stuSex string
+		err := rows.Scan(&stuCode, &stuName, &stuSex)
+		checkErr(err)
+		m := make(map[string]string)
+		m["stu_code"] = stuCode
+		m["stu_name"] = stuName
+		m["stu_sex"] = stuSex
+		studentMapArray = append(studentMapArray, m)
+	}
+	return studentMapArray, len(studentMapArray)
 }
 
 func InsertXlsxInfo(xlsMap map[string]string) {
