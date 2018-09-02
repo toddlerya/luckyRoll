@@ -5,9 +5,35 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os/exec"
+	"runtime"
+	"strings"
 
 	"github.com/toddlerya/luckyRoll/managedata"
 )
+
+var commands = map[string][]string{
+	"windows": []string{"rundll32", "url.dll", "FileProtocolHandler"},
+	"darwin":  []string{"open"},
+	"linux":   []string{"xdg-open"},
+}
+
+func Open(uri string) error {
+	run, ok := commands[runtime.GOOS]
+	if !ok {
+		return fmt.Errorf("don't know how to open things on %s platform", runtime.GOOS)
+	}
+	strRun := strings.Join(run[1:], ",")
+
+	cmd := exec.Command(run[0], strRun, uri)
+	err := cmd.Start()
+	if err != nil {
+		fmt.Printf("请手动打开浏览器，输入:%s  【请不要使用IE浏览器!!!】\n", uri)
+		return err
+	}
+	fmt.Printf("如没有打开浏览器,请手动打开浏览器,输入: %s 【请不要使用IE浏览器!!!】\n", uri)
+	return nil
+}
 
 func main() {
 	// 载入xlsx数据
@@ -52,7 +78,8 @@ func main() {
 	})
 
 	port := "9000"
-	log.Printf("Starting Server at 0.0.0.0:%s \n请使用浏览器打开 http://127.0.0.1:%s", port, port)
+	log.Printf("Starting Server at %s port \n", port)
+	//	log.Printf("请使用浏览器打开 http://127.0.0.1:%s\n", port)
+	Open(fmt.Sprintf("http://127.0.0.1:%s", port))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
-
 }
