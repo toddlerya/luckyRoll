@@ -1,342 +1,130 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>3d-test</title>
-    <script>
-<!--      window.nodeRequire = require;-->
-      delete window.require;
-      delete window.exports;
-      delete window.module;
-    </script>
-    <link rel="stylesheet" href="web/static/css/style.css">
-    <script src="web/static/js/config.js"></script>
-    <script src="web/static/js/jquery-3.2.1.min.js"></script>
-    <script src="web/static/js/vue.js"></script>
-  </head>
+<!doctype html>
+<html lang="zh" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="static/css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="static/css/default.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="static/css/index_style.css"> <!-- Resource style -->
+	<script src="static/js/modernizr.js"></script> <!-- Modernizr -->
+	<title>幸运大转盘</title>
+</head>
+<body>
+	<header class="cd-header htmleaf-header">
+				
+	</header>
 
+	<main class="cd-main-content">
+		<div class="cd-tab-filter-wrapper">
+			<div class="cd-tab-filter">
+				<ul class="cd-filters">
+					<li class="placeholder"> 
+						<a data-type="all" href="#0">All</a> <!-- selected option on mobile -->
+					</li> 
+					<li class="filter"><a class="selected" href="#0" data-type="all">All</a></li>
+					<li class="filter" data-filter=".class-1"><a href="#0" data-type="class-1">Class 1</a></li>
+					<li class="filter" data-filter=".class-2"><a href="#0" data-type="class-2">Class 2</a></li>
+				</ul> <!-- cd-filters -->
+			</div> <!-- cd-tab-filter -->
+		</div> <!-- cd-tab-filter-wrapper -->
 
-  <body>
-	
-    <div id="app">
-      <div class="control-center" id="control"  v-on:mouseleave="clearButton()"></div>
-    
-      <div class="content" id="content">
-        <div id="box"></div>
-      </div>
+		<section class="cd-gallery">
+			<ul>
+				<li class="mix class-1 check1 radio2 option3"><img src="static/img/img-1.jpg" alt="Image 1"></li>
+				<li class="mix class-2 check2 radio2 option2"><img src="static/img/img-2.jpg" alt="Image 2"></li>
+				<li class="mix class-1 check3 radio3 option1"><img src="static/img/img-3.jpg" alt="Image 3"></li>
+				<li class="mix class-1 check3 radio2 option4"><img src="static/img/img-4.jpg" alt="Image 4"></li>
+				<li class="mix class-1 check1 radio3 option2"><img src="static/img/img-5.jpg" alt="Image 5"></li>
+				<li class="mix class-2 check2 radio3 option3"><img src="static/img/img-6.jpg" alt="Image 6"></li>
+				<li class="mix class-2 check2 radio2 option1"><img src="static/img/img-7.jpg" alt="Image 7"></li>
+				<li class="mix class-1 check1 radio3 option4"><img src="static/img/img-8.jpg" alt="Image 8"></li>
+				<li class="mix class-2 check1 radio2 option3"><img src="static/img/img-9.jpg" alt="Image 9"></li>
+				<li class="mix class-1 check3 radio2 option4"><img src="static/img/img-10.jpg" alt="Image 10"></li>
+				<li class="mix class-1 check3 radio3 option2"><img src="static/img/img-11.jpg" alt="Image 11"></li>
+				<li class="mix class-2 check1 radio3 option1"><img src="static/img/img-12.jpg" alt="Image 12"></li>
+				<li class="gap"></li>
+				<li class="gap"></li>
+				<li class="gap"></li>
+			</ul>
+			<div class="cd-fail-message">No results found</div>
+		</section> <!-- cd-gallery -->
 
-      <div class="go">
-        <div class="button-bg">
-          <button class="reload" @click="reload" v-on:mouseover="playAudio('button.wav')"></button>
-          <button class="start" :class="{'start-disabled': isDisabled}" @click="rotate"
-                  :disabled="isDisabled" v-on:mouseover="playAudio('hover.wav')"></button>
-        </div>
-      </div>
+		<div class="cd-filter">
+			<form>
+				<div class="cd-filter-block">
+					<h4>Search</h4>
+					
+					<div class="cd-filter-content">
+						<input type="search" placeholder="尝试输入 class-1...">
+					</div> <!-- cd-filter-content -->
+				</div> <!-- cd-filter-block -->
 
-    </div>
+				<div class="cd-filter-block">
+					<h4>Check boxes</h4>
 
+					<ul class="cd-filter-content cd-filters list">
+						<li>
+							<input class="filter" data-filter=".check1" type="checkbox" id="checkbox1">
+			    			<label class="checkbox-label" for="checkbox1">Option 1</label>
+						</li>
 
-    <script type="text/javascript">
-      new Vue({
-        el: '#app',
-        data() {
-          return {
-            music_list: '',
- 
-            recent_music: '',
-            recent_music_index: 0,
-            recent_volume: 0,
-            recent_volume_old: 10,
+						<li>
+							<input class="filter" data-filter=".check2" type="checkbox" id="checkbox2">
+							<label class="checkbox-label" for="checkbox2">Option 2</label>
+						</li>
 
-            list: '',
-           
+						<li>
+							<input class="filter" data-filter=".check3" type="checkbox" id="checkbox3">
+							<label class="checkbox-label" for="checkbox3">Option 3</label>
+						</li>
+					</ul> <!-- cd-filter-content -->
+				</div> <!-- cd-filter-block -->
 
-            angle: 0, //基础角度
-            angle_i: 0, //角度数变量
+				<div class="cd-filter-block">
+					<h4>Select</h4>
+					
+					<div class="cd-filter-content">
+						<div class="cd-select cd-filters">
+							<select class="filter" name="selectThis" id="selectThis">
+								<option value="">Choose an option</option>
+								<option value=".option1">Option 1</option>
+								<option value=".option2">Option 2</option>
+								<option value=".option3">Option 3</option>
+								<option value=".option4">Option 4</option>
+							</select>
+						</div> <!-- cd-select -->
+					</div> <!-- cd-filter-content -->
+				</div> <!-- cd-filter-block -->
 
-            results: '',
+				<div class="cd-filter-block">
+					<h4>Radio buttons</h4>
 
-            isDisabled: false,  //匹配按钮
-            isFreedisabled: true, //自由按钮
-            isMute: false,  //暂停
-            isFree: false,  //自由模式
-          }
-        },
-        created() {
-          this.getFile();
+					<ul class="cd-filter-content cd-filters list">
+						<li>
+							<input class="filter" data-filter="" type="radio" name="radioButton" id="radio1" checked>
+							<label class="radio-label" for="radio1">All</label>
+						</li>
 
-          setTimeout(()=>{
-            this.insert();
-          },10)
-        },
+						<li>
+							<input class="filter" data-filter=".radio2" type="radio" name="radioButton" id="radio2">
+							<label class="radio-label" for="radio2">Choice 2</label>
+						</li>
 
-        methods: {
-          getFile: function () {
-            this.music_list = getData(0); //  0为音乐，1为学生数据
-            // this.list = getData(1);
-			      this.list = {{.}}
-            // console.log(this.music_list);
-            // console.log('学生人数：' + this.list.length);
-          },
+						<li>
+							<input class="filter" data-filter=".radio3" type="radio" name="radioButton" id="radio3">
+							<label class="radio-label" for="radio3">Choice 3</label>
+						</li>
+					</ul> <!-- cd-filter-content -->
+				</div> <!-- cd-filter-block -->
+			</form>
 
-          clearButton: function () {
-            var control = document.getElementById("control");
-            control.onmousedown = null;
-            control.onmousemove = null;
-            control.onmouseup = null;
-          },
+			<a href="#0" class="cd-close">Close</a>
+		</div> <!-- cd-filter -->
 
-          playAudio: function(src) {
-            var audio = document.createElement('audio');
-            var body = document.body;
-            audio.src = 'web/static/sound/' + src; //你的声音地址
-            audio.autoplay = true;
-            body.appendChild(audio);
-            audio.addEventListener('ended', function() {
-                body.removeChild(audio);  // 播放完毕后从HTML中删除该音频
-            }, false);
-          },
-
-          insert: function () {
-            var vm = this;
-            vm.isDisabled = true;
-            var box = document.getElementById("box");
-            var len = vm.list.length;
-            var rotate = 360/len;
-            vm.angle = rotate;
-            var dom = '';
-            for(let i=0;i<len;i++) {
-              dom += '<div class="item" id="' + i + '"><span class="text">' + vm.list[i]["Name"] + '</span></div>';
-            }
-            box.innerHTML = dom;
-            for(let i=0;i<len;i++) {
-              var id = document.getElementById('' + i);
-              id.style = "transform:translateX(-102px)rotateY(" + rotate*i + "deg)translateZ(3000px);";
-            }
-            setTimeout(()=>{
-              vm.stage_in();
-            },100)
-          },
-
-          stage_in() {
-            var vm = this;
-            var box = document.getElementById("box");
-            var max = vm.list.length;
-            var y_rotate = vm.randomNum(0, max);
-            box.style = 'transition: 3s ease-out;transform:rotateX(-1deg)rotateY(' + vm.angle*(vm.angle_i+y_rotate) + 'deg)';
-            vm.angle_i += y_rotate;
-            setTimeout(()=>{
-              vm.isDisabled = false;
-              vm.isFreedisabled = false;
-            },1000)
-          },
-
-          rotate: function() {
-            this.playAudio('click.wav');
-            var vm = this;
-            var time = vm.roll();
-            var box = document.getElementById("box");
-
-            vm.isDisabled = true;
-            vm.isFreedisabled = true;
-            // 加速
-            setTimeout(()=>{
-              vm.playAudio('roll.wav');
-              box.style = 'transition: 1s cubic-bezier(.65,0,1,1);transform:rotateX(-1deg)rotateY(' + vm.angle*(vm.angle_i+3) + 'deg)';
-              vm.angle_i += 3;
-              setTimeout(()=>{
-                vm.playAudio('roll.wav');
-                setTimeout(()=>{
-                  vm.playAudio('roll.wav');
-                  setTimeout(()=>{
-                    vm.playAudio('roll.wav');
-                  },243);
-                },332);
-              },375);
-            },0);
-
-            //匀速
-            setTimeout(()=>{
-                // vm.playAudio('roll.wav');
-                box.style = 'transition: ' + 150*(12+time) + 'ms linear;transform:rotateX(-1deg)rotateY(' + vm.angle*(vm.angle_i+12+time) + 'deg)';
-                vm.angle_i += 12+time;
-                var t = setInterval(()=>{
-                  vm.playAudio('roll.wav');
-                },150);
-                setTimeout(()=>{
-                  clearTimeout(t);
-                },150*(12+time))
-            },1000);
-
-            //减速
-            setTimeout(function(){
-                vm.playAudio('roll.wav');
-                box.style = 'transition: 1s cubic-bezier(0,0,.35,1);transform:rotateX(-1deg)rotateY(' + vm.angle*(vm.angle_i+3) + 'deg)';
-                vm.angle_i += 3;
-                setTimeout(()=>{
-                  vm.playAudio('roll.wav');
-                  setTimeout(()=>{
-                    vm.playAudio('roll.wav');
-                    setTimeout(()=>{
-                      vm.playAudio('roll.wav');
-                      vm.playAudio('select.wav');
-                    },375);
-                  },332);
-                },243);
-
-                setTimeout(function(){
-                  box.style = 'transition: 0s;transform:rotateX(-1deg)rotateY(' + vm.angle*(vm.angle_i%vm.list.length) + 'deg)';
-                  vm.angle_i = vm.angle_i%vm.list.length;
-                  console.log(vm.angle_i);
-                  var x = 0;
-                  if(vm.angle_i!=0)
-                    x = vm.list.length-vm.angle_i
-                  vm.results = vm.list[x]["Name"];
-                  vm.isDisabled = false;
-                  vm.isFreedisabled = false;
-                  console.log(vm.results);
-                },1000);
-
-                setTimeout(()=>{
-                  $('#content').append('<div id="selected"><span class="text">' + vm.results + '</span></div>');
-                  var w = $('#content').css('width').replace('px','');
-                  var h = $('#content').css('height').replace('px','');
-                  $('#selected').css({'left': w/2-102+'px','top': '102px'});
-                  setTimeout(()=>{
-                    $("#selected").remove();
-                  },499)
-                },1300)
-
-            },1000+150*(12+time))
-
-          },
-
-          roll: function() {
-            // var t = this.randomNum(1,30);
-            var max = this.list.length;
-            var t = this.randomNum(1,max);
-            console.log(t);
-            return t;
-          },
-
-          randomNum: function (minNum,maxNum){
-            switch(arguments.length){
-                case 1:
-                    return parseInt(Math.random()*minNum+1,10);
-                break;
-                case 2:
-                    return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
-                break;
-                default:
-                    return 0;
-                break;
-              }
-          },
-
-          reload: function() {
-            this.playAudio('click.wav');
-            window.location.reload();
-          },
-
-
-          freemove: function() {
-            this.playAudio('click.wav');
-            if(this.isFree) { //关闭自由视角
-              this.isFree = false;
-              this.isDisabled = false;
-              document.onmousedown = () => {
-                document.onmousemove = null;
-                document.onmouseup = null;
-              }
-              document.onmousewheel = null;
-              // document.onmousewheel = () => {
-              // }
-              document.onkeydown = null;
-              // document.onkeydown = () => {
-              // }
-              var content = document.getElementById("content");
-              content.style = 'transition: 1s ease-out;transform:translateZ(-3000px)';
-            }else { //开启自由视角
-              this.isFree = true;
-              this.isDisabled = true;
-              var content = document.getElementById("content");
-              content.style = 'transition: 1s ease-in-out;transform:translateZ(-3000px)scale3d(.6,.6,.6)';
-              setTimeout(()=>{
-                this.move();
-              },1000);
-            }
-          },
-
-          //鼠标拖动
-          move: function() {
-            var vm = this;
-            // var box = document.querySelector("#box");
-            var content = document.querySelector("#content");
-            var xx = 0, yy = 0, zz = 0;
-            var angleZ = 0;
-            var time = 0, key = 0;
-            var gx = 0, gy = 0;
-            var xArr = [], yArr = [], z = -3000;
-            document.onmousewheel = (e) => {
-              if(e.wheelDelta){//IE/Opera/Chrome
-                  zz += e.wheelDelta/1.2;
-                  z = -3000 + zz;
-                  content.style = 'transform:translateZ(' + z + 'px)rotateX('+ xx + 'deg)rotateY(' + yy + 'deg)rotateZ(' + angleZ + 'deg)scale3d(.6,.6,.6)';
-              }else if(e.detail){//Firefox
-
-              }
-            }
-            document.onkeydown = (e) => {
-              if(e.keyCode==37){//键盘左键
-                if(key!=37)
-                  time = 0;
-                if(time>20)
-                  time = 20;
-                time++;
-                angleZ -= .5*time;
-                key = 37;
-              }
-              if(e.keyCode==39){//键盘右键
-                if(key!=39)
-                  time = 0;
-                if(time>20)
-                  time = 20;
-                time++;
-                angleZ += .5*time;
-                key = 39;
-              }
-              content.style = 'transform:translateZ(' + z + 'px)rotateX('+ xx + 'deg)rotateY(' + yy + 'deg)rotateZ(' + angleZ + 'deg)scale3d(.6,.6,.6)';
-            }
-            document.onmousedown = (e) => {//鼠标按下事件
-              xArr[0] = e.clientX/2;//获取鼠标点击屏幕时的坐标
-              yArr[0] = e.clientY/2;
-              gx = 0, gy = 0;
-              document.onmousemove = (e) => {//鼠标移动事件————当鼠标按下且移动时触发
-                xArr[1] = e.clientX/2;//获取鼠标移动时第一个点的坐标
-                yArr[1] = e.clientY/2;
-                yy += xArr[1] - xArr[0];//获得鼠标移动的距离
-                xx += yArr[1] - yArr[0];
-                yy = yy%360;
-                xx = xx%360;
-                gy = xArr[1] - xArr[0];
-                gx = yArr[1] - yArr[0];
-                //将旋转角度写入transform中 scale3d(0.7,0.7,0.7) transition: .5s cubic-bezier(0,0,.46,1);
-                content.style = 'transition: all 0s;transform:translateZ(' + z + 'px)rotateX('+ xx + 'deg)rotateY(' + yy + 'deg)rotateZ(' + angleZ + 'deg)scale3d(.6,.6,.6)';
-                xArr[0] = e.clientX/2;
-                yArr[0] = e.clientY/2;
-              }
-            }
-            document.onmouseup = () => {  //鼠标抬起事件————用于清除鼠标移动事件，
-              yy += gy*3;
-              xx += gx*3;
-              content.style = 'transform:translateZ(' + z + 'px)rotateX('+ xx + 'deg)rotateY(' + yy + 'deg)rotateZ(' + angleZ + 'deg)scale3d(.6,.6,.6)';
-              document.onmousemove = null;
-            }
-          },
-
-
-        }
-      });
-    </script>
-  </body>
+		<a href="#0" class="cd-filter-trigger">Filters</a>
+	</main> <!-- cd-main-content -->
+<script src="static/js/jquery-2.1.1.js"></script>
+<script src="static/js/jquery.mixitup.min.js"></script>
+<script src="static/js/main.js"></script> <!-- Resource jQuery -->
+</body>
 </html>
