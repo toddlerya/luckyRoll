@@ -46,7 +46,7 @@ body {
   min-height: 768px;
   box-sizing: border-box;
   background: url(../img/window_bg.jpg) no-repeat;
-  background-attachment: fixed;
+    background-attachment: fixed;
   background-size: cover;
   -webkit-background-size: cover;/* 兼容Webkit内核浏览器如Chrome和Safari */
   -o-background-size: cover;/* 兼容Opera */
