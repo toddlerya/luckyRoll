@@ -1,7 +1,6 @@
 package managedata
 
 import (
-	"fmt"
 	"math/rand"
 )
 
@@ -9,18 +8,22 @@ type Students struct {
 	Name string
 }
 
-type ClassInfo struct {
+type GradeClassInfo struct {
+	Grade string
 	Class string
 }
 
-type GradeInfo struct {
-	Grade      string
-	ClassChild []ClassInfo
-}
-
-func GetAllGradeClassInfo() {
+func GetAllGradeClassInfo() []GradeClassInfo {
 	gradeClassMapArray := QueryGradeClassInfo()
-	fmt.Println(gradeClassMapArray)
+	var allDataArray []GradeClassInfo
+	for _, each := range gradeClassMapArray {
+		temp := GradeClassInfo{
+			Grade: each["stu_grade"],
+			Class: each["stu_class"],
+		}
+		allDataArray = append(allDataArray, temp)
+	}
+	return allDataArray
 }
 
 func GetStudentsByClass(grade, class string) ([]Students, int) {
