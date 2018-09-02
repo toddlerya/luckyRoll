@@ -65,6 +65,7 @@ func InitSqlite() {
 	//		log.Panicf("%q: %s\n", err, createXlsxInfoSql)
 	//		return
 	//	}
+	db.Close()
 }
 
 func InsertStudentsData2db(data []map[string]string) {
@@ -83,6 +84,23 @@ func InsertStudentsData2db(data []map[string]string) {
 		checkErr(err)
 	}
 	tx.Commit()
+}
+
+func DeleteStudentsDataFromdb(grade, class string) {
+	db, err := sql.Open("sqlite3", dbPath)
+	checkErr(err)
+	defer db.Close()
+
+	tx, err := db.Begin()
+	checkErr(err)
+	stmt, err := tx.Prepare("delete from students_base_info where stu_grade=? and stu_class=?")
+	defer stmt.Close()
+
+	_, err = stmt.Exec(grade, class)
+	checkErr(err)
+
+	tx.Commit()
+	db.Close()
 }
 
 func QueryStudentsInfo(grade, class string) ([]map[string]string, int) {
@@ -107,6 +125,7 @@ func QueryStudentsInfo(grade, class string) ([]map[string]string, int) {
 		m["stu_sex"] = stuSex
 		studentMapArray = append(studentMapArray, m)
 	}
+	db.Close()
 	return studentMapArray, len(studentMapArray)
 }
 
@@ -126,6 +145,7 @@ func InsertXlsxInfo(xlsMap map[string]string) {
 	checkErr(err)
 
 	tx.Commit()
+	db.Close()
 }
 
 func QueryXlsxInfo(xlsxName string) (map[string]string, int) {
@@ -140,13 +160,16 @@ func QueryXlsxInfo(xlsxName string) (map[string]string, int) {
 	err = db.QueryRow("select xlsx_md5, xlsx_date, xlsx_size from xlsx_info where xlsx_name=?", xlsxName).Scan(&xlsxMd5, &xlsxDate, &xlsxSize)
 	switch {
 	case err == sql.ErrNoRows:
+		db.Close()
 		return m, 0
 	case err != nil:
 		checkErr(err)
+		db.Close()
 	}
 	m["xlsx_name"] = xlsxName
 	m["xlsx_md5"] = xlsxMd5
 	m["xlsx_date"] = xlsxDate
 	m["xlsx_size"] = xlsxSize
+	db.Close()
 	return m, 1
 }

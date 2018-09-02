@@ -17,12 +17,15 @@ import (
 
 func calcMd5(fileName string) string {
 	fileObj, err := os.Open(fileName)
+	defer fileObj.Close()
+
 	if err != nil {
 		log.Fatalf("计算文件md5值, 打开文件出错: %q", err)
 	}
 	md5hash := md5.New()
 	io.Copy(md5hash, fileObj)
 	fileMd5 := hex.EncodeToString(md5hash.Sum(nil))
+	fileObj.Close()
 	return fileMd5
 }
 
@@ -95,19 +98,6 @@ func parseXlsxData(dataPath string) ([]map[string]string, []string, error) {
 		// 获取文件去除路径后的名字
 		xlsxName := filepath.Base(filePathName)
 		xlsxName = strings.TrimSpace(xlsxName)
-		// 校验文件是否有改变, 若无改变则不在重新读取
-		fileInfoMap, num := QueryXlsxInfo(xlsxName)
-		if num == 1 {
-			oldFileMd5 := fileInfoMap["xlsx_md5"]
-			newFileMd5 := calcMd5(filePathName)
-			if newFileMd5 == oldFileMd5 {
-				continue
-			}
-		}
-		xlsxArray, err := readXlsx(filePathName)
-		if err != nil {
-			log.Printf("读取%s错误: %s", filePathName, err)
-		}
 		// 获取班级信息
 		xlsxSplitArray := strings.Split(xlsxName, ".xlsx")[0]
 		tmpArray := strings.Split(xlsxSplitArray, "级")
@@ -118,6 +108,24 @@ func parseXlsxData(dataPath string) ([]map[string]string, []string, error) {
 		if err != nil {
 			log.Fatalf("请检查xlsx文件名是否为XXXX级Y班, XXXX为年份(比如2018代表2018级), Y为班级序号(比如1代表一班)")
 		}
+
+		// 校验文件是否有改变, 若无改变则不再重新读取
+		fileInfoMap, num := QueryXlsxInfo(xlsxName)
+		if num == 1 {
+			oldFileMd5 := fileInfoMap["xlsx_md5"]
+			newFileMd5 := calcMd5(filePathName)
+			if newFileMd5 == oldFileMd5 {
+				continue
+			}
+		}
+		// 先清空该班级学生信息
+		DeleteStudentsDataFromdb(grade, class)
+
+		xlsxArray, err := readXlsx(filePathName)
+		if err != nil {
+			log.Printf("读取%s错误: %s", filePathName, err)
+		}
+
 		for _, item := range xlsxArray {
 			m := make(map[string]string)
 			m["stu_code"] = item[0]

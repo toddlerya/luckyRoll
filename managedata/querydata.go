@@ -5,9 +5,28 @@ import (
 	"time"
 )
 
-func GetStudentsByClass(grade, class string) ([]map[string]string, int) {
+type Students struct {
+	Name string
+}
+
+func GetStudentsByClass(grade, class string) ([]Students, int) {
+	//func GetStudentsByClass(grade, class string) ([]byte, int) {
 	studentMaps, count := QueryStudentsInfo(grade, class)
-	return shuffle(studentMaps), count
+	shuffledStudentMaps := shuffle(studentMaps)
+	//	data, err := json.Marshal(shuffledStudentMaps)
+	//	if err != nil {
+	//		log.Fatalf("json.Marshal err: %v", err)
+	//	}
+	//	return data, count
+	var transData []Students
+	for _, each := range shuffledStudentMaps {
+		//		fmt.Println(each)
+		temp := Students{
+			Name: each["stu_name"],
+		}
+		transData = append(transData, temp)
+	}
+	return transData, count
 }
 
 // 随机洗牌
