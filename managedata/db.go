@@ -129,6 +129,30 @@ func QueryStudentsInfo(grade, class string) ([]map[string]string, int) {
 	return studentMapArray, len(studentMapArray)
 }
 
+func QueryGradeClassInfo() []map[string]string {
+	db, err := sql.Open("sqlite3", dbPath)
+	checkErr(err)
+	defer db.Close()
+
+	rows, err := db.Query("SELECT stu_grade, stu_class FROM students_base_info GROUP BY stu_grade, stu_class")
+	checkErr(err)
+	defer rows.Close()
+
+	var GradeClassMapArray []map[string]string
+	for rows.Next() {
+		var stuGrade string
+		var stuClass string
+		err := rows.Scan(&stuGrade, &stuClass)
+		checkErr(err)
+		m := make(map[string]string)
+		m["stu_grade"] = stuGrade
+		m["stu_class"] = stuClass
+		GradeClassMapArray = append(GradeClassMapArray, m)
+	}
+	db.Close()
+	return GradeClassMapArray
+}
+
 func InsertXlsxInfo(xlsMap map[string]string) {
 	db, err := sql.Open("sqlite3", dbPath)
 	checkErr(err)

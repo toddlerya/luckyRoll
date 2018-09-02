@@ -10,9 +10,9 @@
 	<title>幸运大转盘</title>
 </head>
 <body>
-	<header class="cd-header htmleaf-header">
-				
-	</header>
+	<!-- <header class="cd-header htmleaf-header">
+		<p>随便抽抽</p>				
+	</header> -->
 
 	<main class="cd-main-content">
 		<div class="cd-tab-filter-wrapper">
@@ -21,9 +21,12 @@
 					<li class="placeholder"> 
 						<a data-type="all" href="#0">All</a> <!-- selected option on mobile -->
 					</li> 
-					<li class="filter"><a class="selected" href="#0" data-type="all">All</a></li>
-					<li class="filter" data-filter=".class-1"><a href="#0" data-type="class-1">Class 1</a></li>
-					<li class="filter" data-filter=".class-2"><a href="#0" data-type="class-2">Class 2</a></li>
+					<li class="filter"><a class="selected" href="#0" data-type="all">全部</a></li>
+					{{range .}}
+						<li class="filter" data-filter=".class-{{.Grade}}"><a href="#0" data-type="class-{{.Grade}}">{{.Grade}}级</a></li>
+					{{end}}
+					<li class="filter" data-filter=".class-1"><a href="#0" data-type="class-1">年级 1</a></li>
+					<li class="filter" data-filter=".class-2"><a href="#0" data-type="class-2">年级 2</a></li>
 				</ul> <!-- cd-filters -->
 			</div> <!-- cd-tab-filter -->
 		</div> <!-- cd-tab-filter-wrapper -->
@@ -52,7 +55,7 @@
 		<div class="cd-filter">
 			<form>
 				<div class="cd-filter-block">
-					<h4>Search</h4>
+					<h4>搜索</h4>
 					
 					<div class="cd-filter-content">
 						<input type="search" placeholder="尝试输入 class-1...">
@@ -60,7 +63,7 @@
 				</div> <!-- cd-filter-block -->
 
 				<div class="cd-filter-block">
-					<h4>Check boxes</h4>
+					<h4>多选按钮</h4>
 
 					<ul class="cd-filter-content cd-filters list">
 						<li>
@@ -81,7 +84,7 @@
 				</div> <!-- cd-filter-block -->
 
 				<div class="cd-filter-block">
-					<h4>Select</h4>
+					<h4>选择</h4>
 					
 					<div class="cd-filter-content">
 						<div class="cd-select cd-filters">
@@ -97,7 +100,7 @@
 				</div> <!-- cd-filter-block -->
 
 				<div class="cd-filter-block">
-					<h4>Radio buttons</h4>
+					<h4>单选按钮</h4>
 
 					<ul class="cd-filter-content cd-filters list">
 						<li>
@@ -118,10 +121,10 @@
 				</div> <!-- cd-filter-block -->
 			</form>
 
-			<a href="#0" class="cd-close">Close</a>
+			<a href="#0" class="cd-close">关闭</a>
 		</div> <!-- cd-filter -->
 
-		<a href="#0" class="cd-filter-trigger">Filters</a>
+		<a href="#0" class="cd-filter-trigger">筛选</a>
 	</main> <!-- cd-main-content -->
 <script src="static/js/jquery-2.1.1.js"></script>
 <script src="static/js/jquery.mixitup.min.js"></script>
