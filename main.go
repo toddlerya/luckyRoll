@@ -17,6 +17,7 @@ func main() {
 	h := http.FileServer(http.Dir("web/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", h))
 
+	// 展示主页, 选择班级
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		tmpl, err := template.ParseFiles("web/index.html")
 		if err != nil {
@@ -32,6 +33,7 @@ func main() {
 		}
 	})
 
+	// 根据班级条件展示大转盘页面
 	http.HandleFunc("/roll", func(w http.ResponseWriter, r *http.Request) {
 		tmpl, err := template.ParseFiles("web/roll.html")
 		if err != nil {
@@ -48,6 +50,7 @@ func main() {
 			return
 		}
 	})
+
 	port := "9000"
 	log.Printf("Starting Server at 0.0.0.0:%s \n请使用浏览器打开 http://127.0.0.1:%s", port, port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
