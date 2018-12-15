@@ -1,0 +1,10 @@
+body {
+    background-image: url(../img/window_bg.jpg);
+}
+
+#displayName {
+    font-size: 200pt;
+    font-weight: bold;
+    color: aliceblue;
+}
+
