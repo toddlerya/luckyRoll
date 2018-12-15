@@ -5,10 +5,10 @@ function randomChoice(arr) {
 }
 
 function startRoll(nameArray) {
-    var displayName = document.getElementById("displayName");
+    var displayName = document.getElementById("content");
     lucky = setInterval(function() {
         displayName.innerHTML = randomChoice(nameArray)["Name"];
-    }, 100);
+    }, 50);
 }
 
 function stopRoll() {

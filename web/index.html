@@ -6,14 +6,13 @@
     <title>就是你咯</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="static/css/index.css" />
-    <!-- <script src="index.js"></script> -->
 </head>
 <body>
     <div class="main">
     {{range .}}
-        <a href="/roll?grade={{.Grade}}&class={{.Class}}" style="color:aliceblue"/>
-            <h1>{{.Grade}} 级 {{.Class}} 班</h1>
-        </a>        
+    <a href="/roll?grade={{.Grade}}&class={{.Class}}">
+        <p>{{.Grade}} 级 {{.Class}} 班</p>
+    </a>        
     {{end}}
     </div>
 </body>

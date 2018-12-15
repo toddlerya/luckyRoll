@@ -8,12 +8,22 @@
   <title>就是你咯</title>
 </head>
 <body>
-  <div class="button">
-    <button id="start" onclick="startRoll({{.}});">开始</button>
-    <button id="stop" onclick="stopRoll();">停止</button>
-  </div>
-  <div>
-      <p id="displayName">就是你咯~</p>
+  <div class="container">
+    <div class="header">
+      <div class="backHome">
+        <a href="/">主页</a>
+      </div>
+    </div>
+    <div class="main">
+      <div class="button">
+          <button id="start" onclick="startRoll({{.}});">开始</button>
+          <button id="stop" onclick="stopRoll();">停止</button>
+      </div>
+      <div id="content"></div>
+    </div>
   </div>
 </body>
+<footer>
+    <div class="signature">Powered by toddlerya@qq.com</div>
+</footer>
 </html>
