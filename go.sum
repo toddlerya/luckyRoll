@@ -1,0 +1,6 @@
+github.com/360EntSecGroup-Skylar/excelize v1.3.0 h1:Uc23KAK2swCImDQ0Nrmu+j5P1kIZPxz9kl6zEWsZq04=
+github.com/360EntSecGroup-Skylar/excelize v1.3.0/go.mod h1:R8KYLmGns0vDPe6/HyphW0mzW+MFexlGDafU0ykVEnU=
+github.com/mattn/go-sqlite3 v1.9.0 h1:pDRiWfl+++eC2FEFRy6jXmQlvp4Yh3z1MJKg4UeYM/4=
+github.com/mattn/go-sqlite3 v1.9.0/go.mod h1:FPy6KqzDD04eiIsT53CuJW3U88zkxoIYsOqkbpncsNc=
+github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 h1:RWengNIwukTxcDr9M+97sNutRR1RKhG96O6jWumTTnw=
+github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826/go.mod h1:TaXosZuwdSHYgviHp1DAtfrULt5eUgsSMsZf+YrPgl8=
