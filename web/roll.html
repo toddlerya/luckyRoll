@@ -5,21 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="static/js/roll.js"></script>
   <link rel="stylesheet" href="static/css/roll.css">
+  <link rel="stylesheet" href="static/css/footer.css">
   <title>就是你咯</title>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <div class="backHome">
-        <a href="/">主页</a>
-      </div>
+        <div class="backHome">
+            <button id="home" class="button" onclick="location.href='/'">主页</button>
+        </div>
+        <div class="opt">
+            <button id="start" class="button" onclick="startRoll({{.}});">开始</button>
+            <button id="stop" class="button" onclick="stopRoll();">停止</button>
+        </div>
     </div>
     <div class="main">
-      <div class="button">
-          <button id="start" onclick="startRoll({{.}});">开始</button>
-          <button id="stop" onclick="stopRoll();">停止</button>
-      </div>
-      <div id="content"></div>
+      <div id="content"><span>就是你咯</span></div>
     </div>
   </div>
 </body>

@@ -1,0 +1,23 @@
+* {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+  }
+
+footer {
+    font-family: 'Avenir', 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    background-color: aliceblue;
+    width: 100%;
+    margin: auto;
+    bottom: 0;
+    position: fixed;
+}
+
+footer .signature {
+    text-align: center;
+    position: absolute;
+    right: 20px;
+    bottom: 5px;
+    color:aliceblue;
+}

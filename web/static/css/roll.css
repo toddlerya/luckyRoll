@@ -9,45 +9,44 @@ body {
 }
 
 .backHome {
-    font-family: 'Avenir', 'Microsoft YaHei', Helvetica, Arial, sans-serif;
-    font-size: 30pt;
-    font-weight: bold;
+    float: left;
 }
 
-a {
-    text-decoration: none;
-    color: aliceblue;
+.opt {
+    float: right;
 }
 
 .button {
-    max-width: 600px;
-    margin: 0 auto;
+    font-family: 'Avenir', 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    width: 150px;
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: purple; 
+    color: white;
+}
+
+.main {
+    height: 50%;
 }
 
 #content {
+    clear: both;
     font-family: 'Avenir', 'Microsoft YaHei', Helvetica, Arial, sans-serif;
     font-size: 300px;
     font-weight: bold;
     color: aliceblue;
     text-align: center;
-    max-width: 100%;
-    margin: 0 auto;
+    padding-top: 10%;
 }
 
-footer {
-    font-family: 'Avenir', 'Microsoft YaHei', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    background-color: aliceblue;
-    width: 100%;
-    margin: auto;
-    bottom: 0;
-    position: fixed;
-}
-
-footer .signature {
-    text-align: center;
-    position: absolute;
-    right: 20px;
-    bottom: 5px;
-    color:aliceblue;
-}
