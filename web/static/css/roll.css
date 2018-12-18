@@ -1,0 +1,52 @@
+* {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+  }
+
+body {
+    background-image: url(../img/window_bg.jpg);
+}
+
+.backHome {
+    float: left;
+}
+
+.opt {
+    float: right;
+}
+
+.button {
+    font-family: 'Avenir', 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    width: 150px;
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: purple; 
+    color: white;
+}
+
+.main {
+    height: 50%;
+}
+
+#content {
+    clear: both;
+    font-family: 'Avenir', 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+    font-size: 300px;
+    font-weight: bold;
+    color: aliceblue;
+    text-align: center;
+    padding-top: 10%;
+}
+
