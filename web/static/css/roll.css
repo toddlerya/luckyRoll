@@ -27,13 +27,18 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    /* font-size: 16px; */
+    font-size: 0.2rem;
     transition-duration: 0.4s;
 }
 
 .button:hover {
     background-color: purple; 
     color: white;
+}
+
+.container {
+    height: 100%;
 }
 
 .main {
@@ -43,10 +48,10 @@ body {
 #content {
     clear: both;
     font-family: 'Avenir', 'Microsoft YaHei', Helvetica, Arial, sans-serif;
-    font-size: 300px;
+    font-size: 1.7rem;
     font-weight: bold;
     color: aliceblue;
     text-align: center;
-    padding-top: 10%;
+    padding-top: 0.6rem;
 }
 
