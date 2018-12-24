@@ -6,7 +6,7 @@ function randomChoice(arr) {
 }
 
 function focusGo() {
-    onLoad = document.getElementById('go').focus();
+    document.getElementById('go').focus();
 }
 
 function enteyPress() {
