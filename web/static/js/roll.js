@@ -5,6 +5,16 @@ function randomChoice(arr) {
     return arr[Math.floor(Math.random() * arr.length)]
 }
 
+function focusGo() {
+    onLoad = document.getElementById('go').focus();
+}
+
+function enteyPress() {
+    var goButton = document.getElementById("go");
+    if (event.keyCode == 13) {
+        goButton.click();
+    }
+}
 
 function roll(nameArray) {
     if (goStatus) {
@@ -13,7 +23,6 @@ function roll(nameArray) {
         stopRoll();
     }
     goStatus = !goStatus;
-
 }
 
 function startRoll(nameArray) {
@@ -31,3 +40,17 @@ function stopRoll() {
     goButton.innerHTML = "开始";
     clearInterval(lucky);
 }
+
+function addOnloadEvent(func) {
+    var oldonload = window.onload;
+    if (typeof window.onload != 'function') {
+        window.onload = func;
+    } else {
+        window.onload = function() {
+            oldonload();
+            func();
+        }
+    }
+}
+
+addOnloadEvent(focusGo);
