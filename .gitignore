@@ -5,4 +5,5 @@ bind*
 output
 windows.syso
 *.exe
-.data/data.db
+luckyRoll
+data/data.db
