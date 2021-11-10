@@ -13,9 +13,9 @@ import (
 )
 
 var commands = map[string][]string{
-	"windows": []string{"rundll32", "url.dll", "FileProtocolHandler"},
-	"darwin":  []string{"open"},
-	"linux":   []string{"xdg-open"},
+	"windows": {"rundll32", "url.dll", "FileProtocolHandler"},
+	"darwin":  {"open"},
+	"linux":   {"xdg-open"},
 }
 
 func Open(uri string) error {
