@@ -8,11 +8,11 @@ body {
     background-image: url(../img/window_bg.jpg);
 }
 
-.backHome {
+.left {
     float: left;
 }
 
-.opt {
+.right {
     float: right;
 }
 
@@ -48,5 +48,6 @@ body {
     color: aliceblue;
     text-align: center;
     padding-top: 10%;
+    padding-bottom: 14%;
 }
 
