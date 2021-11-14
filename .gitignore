@@ -4,7 +4,4 @@ Thumbs.db
 bind*
 output
 windows.syso
-*.exe
-luckyRoll
-data/data.db
 data/data.db
