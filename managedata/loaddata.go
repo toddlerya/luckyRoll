@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/360EntSecGroup-Skylar/excelize"
+	"github.com/xuri/excelize/v2"
 )
 
 func calcMd5(fileName string) string {
@@ -43,7 +43,7 @@ func updateXlsxInfo(fileName string) {
 	xlsxSize := xlsxBaseInfo.Size()
 	m["xlsx_name"] = xlsxName
 	m["xlsx_md5"] = xlsxMd5
-	m["xlsx_date"] = fmt.Sprintf("%s", xlsxDate)
+	m["xlsx_date"] = xlsxDate.String()
 	m["xlsx_size"] = fmt.Sprintf("%d", xlsxSize)
 	InsertXlsxInfo(m)
 }
@@ -66,13 +66,16 @@ func readXlsx(xlsxPath string) ([][]string, error) {
 	var xlsxArray [][]string
 	xlsx, err := excelize.OpenFile(xlsxPath)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Print(err)
 		return xlsxArray, err
 	}
-	rows := xlsx.GetRows("Sheet1")
+	rows, err := xlsx.GetRows("Sheet1")
+	if err != nil {
+		panic(err)
+	}
 	for _, row := range rows {
 		if rows[0][0] != "学号" && rows[0][1] != "姓名" && rows[0][2] != "性别" {
-			xlsxTitleErr := fmt.Sprintf("%s文件Sheet1的表头应该为: [学号 姓名 性别]")
+			xlsxTitleErr := fmt.Sprintf("%s文件Sheet1的表头应该为: [学号 姓名 性别]", xlsxPath)
 			return xlsxArray, errors.New(xlsxTitleErr)
 		}
 		if row[0] == "学号" && row[1] == "姓名" && row[2] == "性别" {
@@ -104,6 +107,9 @@ func parseXlsxData(dataPath string) ([]map[string]string, []string, error) {
 		grade := tmpArray[0]
 		class := strings.Split(tmpArray[1], "班")[0]
 		_, err = strconv.Atoi(grade)
+		if err != nil {
+			log.Fatalf("请检查xlsx文件名是否为XXXX级Y班, XXXX为年份(比如2018代表2018级), Y为班级序号(比如1代表一班)")
+		}
 		_, err = strconv.Atoi(class)
 		if err != nil {
 			log.Fatalf("请检查xlsx文件名是否为XXXX级Y班, XXXX为年份(比如2018代表2018级), Y为班级序号(比如1代表一班)")
